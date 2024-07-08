@@ -1,0 +1,116 @@
+Sub CT_GOV_AUTO()
+'
+' CT_GOV_AUTO Macro
+'
+ 
+    ' Define the window name dynamically based on the current date
+    Dim windowName As String
+    windowName = "ClinicalTrails_DIFF_CTR6_" & Format(Date, "ddmmyy")
+ 
+    ' Select the second sheet
+    Sheets(2).Select
+    ' Hide columns AW to BE
+    Columns("AW:BE").EntireColumn.Hidden = True
+    ' Apply the filter to column 47 with criteria "NEW"
+    ActiveSheet.Range("$A$1:$BI$1").AutoFilter Field:=47, Criteria1:="NEW"
+    ' Determine the last row with data in column A
+    Dim lastRow As Long
+    lastRow = Cells(Rows.Count, "A").End(xlUp).Row
+    ' Determine the last column with data in row 1
+    Dim lastCol As Long
+    lastCol = Cells(1, Columns.Count).End(xlToLeft).Column
+    ' Select the dynamic range from A1 to the last row and last column
+    Range(Cells(1, 1), Cells(lastRow, lastCol)).Select
+    ' Copy the selected range
+    Selection.Copy
+    ' Create a new workbook and paste the copied data
+    Dim newWorkbook As Workbook
+    Dim workbookName As String
+    Dim sharePointPath As String
+    Set newWorkbook = Workbooks.Add
+    ActiveSheet.Paste
+    ' Generate the workbook name with the current date
+    workbookName = "CT.gov_Alfresco_" & Format(Date, "mmmm d, yyyy") & "_UPDATES.xlsx"
+ 
+    ' Save the new workbook with the generated name
+     'Define the SharePoint path
+    sharePointPath = "https://norstellaglobal-my.sharepoint.com/personal/velusamy_arunkumar_norstella_com/Documents/"
+ 
+    ' Save the new workbook to the SharePoint location with the generated name
+    newWorkbook.SaveAs Filename:=sharePointPath & workbookName, FileFormat:=xlOpenXMLWorkbook, CreateBackup:=False
+    ' Remove copy mode
+    Application.CutCopyMode = False
+    ' Apply interior settings to the selection
+    With Selection.Interior
+        .Pattern = xlNone
+        .TintAndShade = 0
+        .PatternTintAndShade = 0
+    End With
+    ' Rename the new sheet to "New"
+    Sheets("Sheet1").Name = "New"
+    ' Add a new sheet after the renamed sheet
+    Sheets.Add After:=ActiveSheet
+    ' Go to source page
+    Windows(windowName).Activate
+    ' Apply the filter to column 47 with criteria "status or status/results"
+    ActiveSheet.Range("$A$1:$BI$1").AutoFilter Field:=47, Criteria1:= _
+        "=STATUS", Operator:=xlOr, Criteria2:="=STATUS/RESULTS"
+    ' Copy the selected range
+    Selection.Copy
+    ' Add to existing workbook and paste the copied data
+    Windows(workbookName).Activate
+    ActiveSheet.Paste
+    ' Remove copy mode
+    Application.CutCopyMode = False
+    ' Apply interior settings to the selection
+    With Selection.Interior
+        .Pattern = xlNone
+        .TintAndShade = 0
+        .PatternTintAndShade = 0
+    End With
+    ' Rename the new sheet to "New"
+    Sheets("Sheet2").Name = "Status"
+    ' Add a new sheet after the renamed sheet
+    Sheets.Add After:=ActiveSheet
+    ' Go to source page
+    Windows(windowName).Activate
+    ' Apply the filter to column 47 with criteria "Results or status/results"
+    ActiveSheet.Range("$A$1:$BI$1").AutoFilter Field:=47, Criteria1:= _
+        "=RESULTS", Operator:=xlOr, Criteria2:="=STATUS/RESULTS"
+    ' Copy the selected range
+    Selection.Copy
+    ' Add to existing workbook and paste the copied data
+    Windows(workbookName).Activate
+    ActiveSheet.Paste
+    ' Remove copy mode
+    Application.CutCopyMode = False
+    ' Apply interior settings to the selection
+    With Selection.Interior
+        .Pattern = xlNone
+        .TintAndShade = 0
+        .PatternTintAndShade = 0
+    End With
+    ' Rename the new sheet to "New"
+    Sheets("Sheet3").Name = "Results"
+    ' Add a new sheet after the renamed sheet
+    Sheets.Add After:=ActiveSheet
+    ' Go to source page
+    Windows(windowName).Activate
+    ' Apply the filter to column 47 with criteria "others"
+    ActiveSheet.Range("$A$1:$BI$1").AutoFilter Field:=47, Criteria1:="OTHERS"
+    ' Copy the selected range
+    Selection.Copy
+    ' Add to existing workbook and paste the copied data
+    Windows(workbookName).Activate
+    ActiveSheet.Paste
+    ' Remove copy mode
+    Application.CutCopyMode = False
+    ' Apply interior settings to the selection
+    With Selection.Interior
+        .Pattern = xlNone
+        .TintAndShade = 0
+        .PatternTintAndShade = 0
+    End With
+    ' Rename the new sheet to "New"
+    Sheets("Sheet4").Name = "Others"
+End Sub
