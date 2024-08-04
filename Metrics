@@ -1,0 +1,63 @@
+Sub metrics_add_macro()
+'
+' metrics_add_macro Macro
+'
+' date_macro Macro
+'
+
+    Range("I3:I4").Select
+    Selection.Copy
+    Range("N3").Select
+    Selection.PasteSpecial Paste:=xlPasteValues, Operation:=xlNone, SkipBlanks _
+        :=False, transpose:=False
+    Application.CutCopyMode = False
+    Selection.NumberFormat = "m\/d\/yyyy"
+
+
+
+    Range("C3").Select
+    Selection.Copy
+    Range("N8").Select
+    Selection.PasteSpecial Paste:=xlPasteValues, Operation:=xlNone, SkipBlanks _
+        :=False, transpose:=False
+    Range("I8:I10").Select
+    Application.CutCopyMode = False
+    Selection.Copy
+    Range("N9").Select
+    Selection.PasteSpecial Paste:=xlPasteValues, Operation:=xlNone, SkipBlanks _
+        :=False, transpose:=False
+    Range("N9").Select
+    Application.CutCopyMode = False
+    Selection.Copy
+    Range("N12").Select
+    ActiveSheet.Paste
+    Range("O12").Select
+    Application.CutCopyMode = False
+    Application.CutCopyMode = False
+    ActiveCell.FormulaR1C1 = "=R[-2]C[-1]+R[-1]C[-1]"
+    Range("O12").Select
+    Selection.Copy
+    Range("N13").Select
+    Selection.PasteSpecial Paste:=xlPasteValues, Operation:=xlNone, SkipBlanks _
+        :=False, transpose:=False
+    Range("I13:I19").Select
+    Application.CutCopyMode = False
+    Selection.Copy
+    Range("N14").Select
+    Selection.PasteSpecial Paste:=xlPasteValues, Operation:=xlNone, SkipBlanks _
+        :=False, transpose:=False
+    Range("N3:N20").Select
+    Application.CutCopyMode = False
+    Selection.Copy
+'
+' transpose Macro
+'
+
+    Range("M24").Select
+    Selection.PasteSpecial Paste:=xlPasteAll, Operation:=xlNone, SkipBlanks:= _
+        False, transpose:=True
+    Application.CutCopyMode = False
+    Selection.Copy
+    Application.CutCopyMode = False
+    Selection.Copy
+End Sub
