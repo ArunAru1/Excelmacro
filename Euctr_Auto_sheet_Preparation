@@ -1,0 +1,35 @@
+Sub EUCTR_AUTO()
+'
+' EUCTR_AUTO Macro
+'
+' Keyboard Shortcut: Ctrl+Shift+E
+'
+    Dim lastRow As Long
+    Dim newWorkbook As Workbook
+    Dim workbookName As String
+    Dim sharePointPath As String
+
+    ' Find the last non-empty cell in column AY
+    Sheets("Differences").Select
+    lastRow = Cells(Rows.Count, "AY").End(xlUp).Row
+
+    ' Select the range from A1 to the last non-empty cell in AY
+    range("A1:AY" & lastRow).Select
+    range("K9").Activate
+    Selection.Copy
+
+    ' Add a new workbook and paste the selection
+    Set newWorkbook = Workbooks.Add
+    ActiveSheet.Paste
+
+    ' Generate the workbook name with the current date
+    workbookName = "EUCTR_Alfresco_" & Format(Date, "mmmm d, yyyy") & "_UPDATES.xlsx"
+
+    ' Define the SharePoint path
+    sharePointPath = "https://norstellaglobal-my.sharepoint.com/personal/velusamy_arunkumar_norstella_com/Documents/"
+
+    ' Save the new workbook to the SharePoint location with the generated name
+    newWorkbook.SaveAs Filename:=sharePointPath & workbookName, FileFormat:=xlOpenXMLWorkbook, CreateBackup:=False
+
+End Sub
+
